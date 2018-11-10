@@ -18,7 +18,7 @@ CREATE TABLE user(
     name VARCHAR(100),
     surname VARCHAR(100),
     username VARCHAR(100) NOT NULL UNIQUE,
-    passhash VARCHAR(200) NOT NULL UNIQUE,
+    password VARCHAR(200) NOT NULL UNIQUE,
     type VARCHAR(100) NOT NULL,
     birth DATE NOT NULL
 );
