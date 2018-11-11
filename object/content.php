@@ -31,6 +31,7 @@ class Content
         $statement->execute();
         return $statement;
     }
+
     public function create()
     {
         $query = "INSERT INTO " . $this->table_name . " VALUES(null, '"
@@ -42,36 +43,21 @@ class Content
         $statement->execute();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getTitle()
+    public function clean_attributes()
     {
-        return $this->title;
+        $this->id_content = null;
+        $this->title = null;
+        $this->url = null;
+        $this->state = null;
+        $this->description = null;
+
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUrl()
+    public function remove($id_content)
     {
-        return $this->url;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_content = " .$id_content;
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
     }
 
 }

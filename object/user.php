@@ -40,6 +40,15 @@ class User
 
     }
 
+    public function get_user($id_user)
+    {
+        $query = "SELECT name, surname, username, type, birth FROM " . $this->table_name
+            . "WHERE id_user = " . $id_user;
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+        return $statement;
+    }
+
     public function verify_sign_in(string $username, string $password)
     {
         $op = ['salt' => $username . ':::krestUserUPB', 'cost' => 13];
@@ -49,6 +58,34 @@ class User
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
+    }
+    public function update_password($id_user){
+        $op = ['salt' => $this->username . ':::krestUserUPB', 'cost' => 13];
+        $hashed_password = password_hash($this->password, PASSWORD_BCRYPT, $op);
+        $query = "UPDATE " . $this->table_name
+            . " SET password = '" . $hashed_password
+            . "', username = '" . $this->username
+            . "' WHERE id_user = " . $id_user;
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+    }
+    public function remove($id_user)
+    {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_user = " . $id_user;
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+    }
+
+    public function update($id_user)
+    {
+        $query = "UPDATE " . $this->table_name
+            . " SET name = '" . $this->name
+            . "', surname = '" . $this->surname
+            . "', type = '" . $this->type
+            . "', birth = '" . $this->birth
+            . "' WHERE id_user = " . $id_user;
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
     }
 
     public function clean_attributes()
