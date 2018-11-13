@@ -25,37 +25,37 @@ session_start();
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container-fluid w-100">
-    <?php
-    if ($_SESSION["signed_in"]) {
+<?php
+if ($_SESSION["signed_in"]) {
 //if(true){
-        ?>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-4">
-            <!-- Brand/logo -->
-            <a class="navbar-brand" href="#">Logo</a>
+    ?>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-4">
+        <a class="navbar-brand" href="homepage.php">Krest</a>
 
-            <!-- Links -->
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="login.php?sign_out=true">Link 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link 2</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link 3</a>
-                </li>
-            </ul>
-        </nav>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Añadir contenido</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link 3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="login.php?sign_out=true">Cerrar sesión</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid w-100">
 
         <div class="container">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Búsqueda"
-                       aria-describedby="basic-addon2" name="search">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+            <form action="homepage.php" method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Contenido..." aria-label="Búsqueda"
+                           aria-describedby="basic-addon2" name="search">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                    </div>
                 </div>
-            </div>
+            </form>
             <table class="table table-bordered table-dark">
                 <tr>
                     <th>ID</th>
@@ -82,7 +82,7 @@ session_start();
                     CURLOPT_CUSTOMREQUEST => 'GET'
                 ));
                 $res = json_decode(curl_exec($curl), true);
-                foreach ($res as $element) {
+                foreach ($res as $index => $element) {
                     ?>
                     <tr>
                         <?php
@@ -92,24 +92,30 @@ session_start();
                         echo '<th>' . $element["state"] . '</th>';
                         echo '<th>' . $element["description"] . '</th>';
                         ?>
+                        <th>
+                            <a class="btn btn-danger btn-sm" href="<?php
+                            echo "#" . $index;?>" role="button">Eliminar</a>
+                        </th>
                     </tr>
                     <?php
                 }
                 ?>
             </table>
         </div>
-        <?php
-    } else {
-        ?>
+    </div>
+    <?php
+} else {
+    ?>
+    <div class="container-fluid w-100">
         <div class="row justify-content-center align-items-center h-25">
             <h1>No ha iniciado sesión</h1>
         </div>
         <div class="row justify-content-center align-items-center h-75">
             <a class="btn btn-primary" href="login.php" role="button">Inicia sesión!</a>
         </div>
-        <?php
-    }
-    ?>
-</div>
+    </div>
+    <?php
+}
+?>
 </body>
 </html>

@@ -44,7 +44,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $content->url = $data['url'];
         $content->state = $data['state'];
         $content->description = $data['description'];
-        $content->create();
+        $content->create($data['id_user']);
         $content->clean_attributes();
         break;
     case 'DELETE':

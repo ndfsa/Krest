@@ -26,19 +26,20 @@ class Content
     public function read(string $s)
     {
         $query = "SELECT * FROM " . $this->table_name .
-            " WHERE title LIKE '%" . $s . "%'" . " OR description LIKE '%" . $s . "%'";
+            " WHERE title LIKE '%" . $s . "%' OR description LIKE '%" . $s
+            . "%' OR url LIKE '%" . $s . "%'";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
     }
 
-    public function create()
+    public function create($id_user)
     {
-        $query = "INSERT INTO " . $this->table_name . " VALUES(null, '"
+        $query = "CALL ins_content('"
             . $this->title . "', '"
             . $this->url . "', '"
             . $this->state . "', '"
-            . $this->description . "')";
+            . $this->description . "', " . $id_user . ")";
         $statement = $this->connection->prepare($query);
         $statement->execute();
     }
@@ -55,9 +56,8 @@ class Content
 
     public function remove($id_content)
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id_content = " .$id_content;
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_content = " . $id_content;
         $statement = $this->connection->prepare($query);
         $statement->execute();
     }
-
 }

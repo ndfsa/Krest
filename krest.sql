@@ -45,3 +45,24 @@ CREATE TABLE logs(
     state_new VARCHAR(100),
     description_new TEXT
 );
+
+DROP PROCEDURE IF EXISTS ins_content;
+DELIMITER //
+CREATE PROCEDURE ins_content(title VARCHAR(100), url VARCHAR(100),
+state VARCHAR(100), description VARCHAR(100), id_user INT)
+BEGIN
+  DECLARE aux_id INT DEFAULT 0;
+  DECLARE exit handler for sqlexception
+      BEGIN
+      ROLLBACK;
+   END;
+  START TRANSACTION;
+    SET autocommit = 0;
+    INSERT INTO content VALUES (NULL, title, url, state, description);
+    SELECT id_content INTO aux_id FROM content c WHERE c.title = title AND
+      c.url = url AND c.state = state AND c.description = description
+      ORDER BY c.id_content DESC LIMIT 1;
+    INSERT INTO adds VALUES(NULL, id_user, aux_id);
+  COMMIT;
+END //
+DELIMITER ;

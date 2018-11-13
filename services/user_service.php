@@ -20,11 +20,12 @@ $user = new User($db_connection);
 switch ($_SERVER['REQUEST_METHOD']){
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
-        if($data["new_user"]){
+        if(isset($data["new_user"])){
             $data = json_decode(file_get_contents('php://input'), true);
             $user->name = $data['name'];
             $user->surname = $data['surname'];
             $user->password = $data['password'];
+            $user->username = $data['username'];
             $user->type = $data['type'];
             $user->birth = $data['birth'];
             $user->create();
