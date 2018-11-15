@@ -14,11 +14,11 @@ session_start();
     <title>krest: database</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -28,6 +28,11 @@ session_start();
 <?php
 if ($_SESSION["signed_in"]) {
 //if(true){
+    if (isset($_GET["search"])) {
+        $search = $_GET["search"];
+    } else {
+        $search = "";
+    }
     ?>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-4">
         <a class="navbar-brand" href="homepage.php">Krest</a>
@@ -50,7 +55,8 @@ if ($_SESSION["signed_in"]) {
             <form action="homepage.php" method="get">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Contenido..." aria-label="Búsqueda"
-                           aria-describedby="basic-addon2" name="search">
+                           aria-describedby="basic-addon2" name="search"
+                           value="<?php echo $search; ?>">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit">Buscar</button>
                     </div>
@@ -65,11 +71,6 @@ if ($_SESSION["signed_in"]) {
                     <th>Descripción</th>
                 </tr>
                 <?php
-                if (isset($_GET["search"])) {
-                    $search = $_GET["search"];
-                } else {
-                    $search = "";
-                }
                 $curl = curl_init();
                 $req_url = 'http://localhost:8080/Krest/services/content_service.php?search=' . $search;
                 $headers = ['Accept: application/json',
@@ -92,10 +93,12 @@ if ($_SESSION["signed_in"]) {
                         echo '<th>' . $element["state"] . '</th>';
                         echo '<th>' . $element["description"] . '</th>';
                         ?>
+                        <?php if($_SESSION['type'] == 'admin'){?>
                         <th>
-                            <a class="btn btn-danger btn-sm" href="<?php
-                            echo "#" . $index;?>" role="button">Eliminar</a>
+                            <a href="delete.php?id_content=<?php echo $element["id_content"];?>"
+                               class="btn btn-danger btn-sm">Eliminar</a>
                         </th>
+                        <?php }?>
                     </tr>
                     <?php
                 }

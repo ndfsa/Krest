@@ -28,8 +28,8 @@ CREATE TABLE adds(
     id_adds INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     id_user INT NOT NULL,
     id_content INT NOT NULL,
-    FOREIGN KEY(id_user) REFERENCES user(id_user) ON UPDATE CASCADE,
-    FOREIGN KEY(id_content) REFERENCES content(id_content) ON UPDATE CASCADE
+    FOREIGN KEY(id_user) REFERENCES user(id_user) ON DELETE CASCADE,
+    FOREIGN KEY(id_content) REFERENCES content(id_content) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS logs;

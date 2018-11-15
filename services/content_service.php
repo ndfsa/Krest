@@ -19,27 +19,37 @@ $content = new Content($db_connection);
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        $statement = $content->read($_GET["search"]);
-        $num = $statement->rowCount();
-        if ($num > 0) {
-            $content_array = array();
-            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                $c_item = array(
-                    "id_content" => $row['id_content'],
-                    "title" => $row['title'],
-                    "url" => $row['url'],
-                    "state" => $row['state'],
-                    "description" => $row['description']
-                );
-                array_push($content_array, $c_item);
+        if(isset($_GET['search'])){
+            $statement = $content->read($_GET["search"]);
+            $num = $statement->rowCount();
+            if ($num > 0) {
+                $content_array = array();
+                while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                    $c_item = array(
+                        "id_content" => $row['id_content'],
+                        "title" => $row['title'],
+                        "url" => $row['url'],
+                        "state" => $row['state'],
+                        "description" => $row['description']
+                    );
+                    array_push($content_array, $c_item);
+                }
+                http_response_code(200);
+                echo json_encode($content_array);
             }
-            http_response_code(200);
-            echo json_encode($content_array);
+        }
+        if (isset($_GET['id_content'])){
+            $statement = $content->readOne($_GET["id_content"]);
+            $num = $statement->rowCount();
+            if ($num === 1) {
+                $elem = $statement->fetch(PDO::FETCH_ASSOC);
+                http_response_code(200);
+                echo json_encode($elem);
+            }
         }
         break;
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
-        $content->id_content = $data['id_content'];
         $content->title = $data['title'];
         $content->url = $data['url'];
         $content->state = $data['state'];
@@ -48,9 +58,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $content->clean_attributes();
         break;
     case 'DELETE':
-        $data = json_decode(file_get_contents('php://input'), true);
-        $content->remove($data["id_content"]);
-        http_response_code(200);
+        if(isset($_GET['id_content'])){
+            $content->remove($_GET["id_content"]);
+            http_response_code(200);
+        }
         break;
     default:
         http_response_code(500);

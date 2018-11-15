@@ -72,9 +72,10 @@ switch ($_SERVER['REQUEST_METHOD']){
         }
         break;
     case 'DELETE':
-        $data = json_decode(file_get_contents('php://input'), true);
-        $user->remove($data["id_user"]);
-        http_response_code(200);
+        if(isset($_GET['id_user'])){
+            $user->remove($data['id_user']);
+            http_response_code(200);
+        }
         break;
     case 'GET':
         $statement = $user->get_user($_GET['id_user']);

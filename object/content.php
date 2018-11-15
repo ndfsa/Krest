@@ -33,6 +33,15 @@ class Content
         return $statement;
     }
 
+    public function readOne(int $id_content)
+    {
+        $query = "SELECT * FROM " . $this->table_name .
+            " WHERE id_content = " . $id_content;
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+        return $statement;
+    }
+
     public function create($id_user)
     {
         $query = "CALL ins_content('"
