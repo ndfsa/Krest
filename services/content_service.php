@@ -63,6 +63,17 @@ switch ($_SERVER['REQUEST_METHOD']) {
             http_response_code(200);
         }
         break;
+    case 'PUT':
+        if(isset($_GET['id_content'])){
+            $data = json_decode(file_get_contents('php://input'), true);
+            $content->title = $data['title'];
+            $content->url = $data['url'];
+            $content->state = $data['state'];
+            $content->description = $data['description'];
+            $content->modify($_GET['id_content']);
+            $content->clean_attributes();
+        }
+        break;
     default:
         http_response_code(500);
         echo json_encode(array("error" => "no content"));

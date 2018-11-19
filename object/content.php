@@ -10,7 +10,6 @@
 class Content
 {
     private $connection;
-    private $table_name = "content";
 
     public $id_content;
     public $title;
@@ -25,9 +24,7 @@ class Content
 
     public function read(string $s)
     {
-        $query = "SELECT * FROM " . $this->table_name .
-            " WHERE title LIKE '%" . $s . "%' OR description LIKE '%" . $s
-            . "%' OR url LIKE '%" . $s . "%'";
+        $query = "CALL get_content('" . $s . "')";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
@@ -35,8 +32,7 @@ class Content
 
     public function readOne(int $id_content)
     {
-        $query = "SELECT * FROM " . $this->table_name .
-            " WHERE id_content = " . $id_content;
+        $query = "CALL get_one('" . $id_content . "')";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
@@ -53,6 +49,17 @@ class Content
         $statement->execute();
     }
 
+    public function modify($id_content)
+    {
+        $query = "CALL mod_content('"
+            . $this->title . "', '"
+            . $this->url . "', '"
+            . $this->state . "', '"
+            . $this->description . "', " . $id_content . ")";
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+    }
+
     public function clean_attributes()
     {
         $this->id_content = null;
@@ -65,7 +72,7 @@ class Content
 
     public function remove($id_content)
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE id_content = " . $id_content;
+        $query = "CALL delete_one(" . $id_content . ")";
         $statement = $this->connection->prepare($query);
         $statement->execute();
     }

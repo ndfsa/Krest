@@ -39,7 +39,7 @@ if ($_SESSION["signed_in"]) {
 
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#">Añadir contenido</a>
+                <a class="nav-link" href="add.php">Añadir contenido</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link 3</a>
@@ -50,7 +50,6 @@ if ($_SESSION["signed_in"]) {
         </ul>
     </nav>
     <div class="container-fluid w-100">
-
         <div class="container">
             <form action="homepage.php" method="get">
                 <div class="input-group mb-3">
@@ -93,12 +92,22 @@ if ($_SESSION["signed_in"]) {
                         echo '<th>' . $element["state"] . '</th>';
                         echo '<th>' . $element["description"] . '</th>';
                         ?>
-                        <?php if($_SESSION['type'] == 'admin'){?>
                         <th>
-                            <a href="delete.php?id_content=<?php echo $element["id_content"];?>"
-                               class="btn btn-danger btn-sm">Eliminar</a>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <a href="modify.php?id_content=<?php echo $element["id_content"]; ?>"
+                                           class="btn btn-primary btn-sm">Modificar</a>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <?php if ($_SESSION['type'] == 'admin') { ?>
+                                            <a href="delete.php?id_content=<?php echo $element["id_content"]; ?>"
+                                               class="btn btn-danger btn-sm">Eliminar</a>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>
                         </th>
-                        <?php }?>
                     </tr>
                     <?php
                 }
