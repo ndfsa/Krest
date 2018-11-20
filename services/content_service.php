@@ -37,8 +37,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 http_response_code(200);
                 echo json_encode($content_array);
             }
-        }
-        if (isset($_GET['id_content'])){
+        }else if (isset($_GET['id_content'])){
             $statement = $content->readOne($_GET["id_content"]);
             $num = $statement->rowCount();
             if ($num === 1) {
