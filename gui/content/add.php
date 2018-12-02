@@ -27,7 +27,7 @@ session_start();
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="homepage.php">Krest</a>
+    <a class="navbar-brand" href="../homepage.php">Krest</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,18 +36,23 @@ session_start();
             <li class="nav-item">
                 <a class="nav-link" href="add.php">Añadir contenido</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Administrar usuarios
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Add</a>
-                    <a class="dropdown-item" href="#">Modify</a>
-                    <a class="dropdown-item" href="#">Delete</a>
-                </div>
-            </li>
+            <?php if ($_SESSION["type"] == "Administrador") { ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Administrar usuarios
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Add</a>
+                        <a class="dropdown-item" href="#">Modify</a>
+                        <a class="dropdown-item" href="#">Delete</a>
+                    </div>
+
+                </li>
+            <?php } ?>
             <li class="nav-item">
-                <a class="nav-link" href="login.php?sign_out=true">Cerrar sesión</a>
+                <a class="nav-link" href="../login.php?sign_out=true">Cerrar sesión</a>
             </li>
         </ul>
     </div>
@@ -71,7 +76,7 @@ session_start();
             ));
             curl_exec($curl);
             ?>
-            <a href="homepage.php"
+            <a href="../homepage.php"
                class="btn btn-primary btn-lg">Volver a inicio</a>
             <?php
         } else {

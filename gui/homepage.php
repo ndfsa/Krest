@@ -33,6 +33,7 @@ if ($_SESSION["signed_in"]) {
     } else {
         $search = "";
     }
+    //var_dump($search);
     ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="homepage.php">Krest</a>
@@ -43,19 +44,23 @@ if ($_SESSION["signed_in"]) {
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="add.php">Añadir contenido</a>
+                    <a class="nav-link" href="content/add.php">Añadir contenido</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                        Administrar usuarios
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Add</a>
-                        <a class="dropdown-item" href="#">Modify</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                    </div>
-                </li>
+                <?php if ($_SESSION["type"] == "Administrador") { ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Administrar usuarios
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Add</a>
+                            <a class="dropdown-item" href="#">Modify</a>
+                            <a class="dropdown-item" href="#">Delete</a>
+                        </div>
+
+                    </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link" href="login.php?sign_out=true">Cerrar sesión</a>
                 </li>
@@ -84,7 +89,7 @@ if ($_SESSION["signed_in"]) {
                 </tr>
                 <?php
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/content_service.php?search=' . $search;
+                $req_url = 'http://localhost:8080/Krest/services/content_service.php?search=' . urlencode($search);
                 $headers = ['Accept: application/json',
                     'Content-Type: application/json',
                     'Accept-Encoding: application/json'];
@@ -106,12 +111,12 @@ if ($_SESSION["signed_in"]) {
                         echo '<th>' . $element["description"] . '</th>';
                         ?>
                         <th class="text-center">
-                            <a href="modify.php?id_content=<?php echo $element["id_content"]; ?>"
+                            <a href="content/modify.php?id_content=<?php echo $element["id_content"]; ?>"
                                class="btn btn-primary btn-sm">Modificar</a>
                         </th>
-                        <?php if ($_SESSION['type'] == 'admin') { ?>
+                        <?php if ($_SESSION['type'] == 'Administrador') { ?>
                             <th class="text-center">
-                                <a href="delete.php?id_content=<?php echo $element["id_content"]; ?>"
+                                <a href="content/delete.php?id_content=<?php echo $element["id_content"]; ?>"
                                    class="btn btn-danger btn-sm">Eliminar</a>
                             </th>
                         <?php } ?>

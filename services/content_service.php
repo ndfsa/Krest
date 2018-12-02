@@ -20,7 +20,7 @@ $content = new Content($db_connection);
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         if(isset($_GET['search'])){
-            $statement = $content->read($_GET["search"]);
+            $statement = $content->read(urldecode($_GET["search"]));
             $num = $statement->rowCount();
             if ($num > 0) {
                 $content_array = array();

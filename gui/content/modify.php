@@ -27,8 +27,9 @@ session_start();
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="homepage.php">Krest</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="../homepage.php">Krest</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -36,22 +37,28 @@ session_start();
             <li class="nav-item">
                 <a class="nav-link" href="add.php">Añadir contenido</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Administrar usuarios
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Add</a>
-                    <a class="dropdown-item" href="#">Modify</a>
-                    <a class="dropdown-item" href="#">Delete</a>
-                </div>
-            </li>
+            <?php if ($_SESSION["type"] == "Administrador") { ?>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Administrar usuarios
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Add</a>
+                        <a class="dropdown-item" href="#">Modify</a>
+                        <a class="dropdown-item" href="#">Delete</a>
+                    </div>
+
+                </li>
+            <?php } ?>
             <li class="nav-item">
-                <a class="nav-link" href="login.php?sign_out=true">Cerrar sesión</a>
+                <a class="nav-link" href="../login.php?sign_out=true">Cerrar sesión</a>
             </li>
         </ul>
     </div>
-</nav><br>
+</nav>
+<br>
 <div class="container-fluid w-100">
     <div class="container">
         <?php
@@ -71,12 +78,11 @@ session_start();
             ));
             curl_exec($curl);
             ?>
-            <a href="homepage.php"
+            <a href="../homepage.php"
                class="btn btn-primary btn-lg">Volver a inicio</a>
             <?php
         } else {
             if (isset($_GET['id_content'])) {
-                //TODO get info from database, $_GET['id_content']
                 $curl = curl_init();
                 $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
                 $headers = ['Accept: application/json',
@@ -90,7 +96,7 @@ session_start();
                 ));
                 $res = json_decode(curl_exec($curl), true);
                 ?>
-                <form action="modify.php?id_content=<?php echo $_GET['id_content'];?>" method="post">
+                <form action="modify.php?id_content=<?php echo $_GET['id_content']; ?>" method="post">
                     <div class="form-group">
                         <label for="title">Título</label>
                         <input type="text" class="form-control" id="title" placeholder="Título"

@@ -53,7 +53,7 @@ switch ($_SERVER['REQUEST_METHOD']){
         if(isset($_GET["id_user"])){
             $data = json_decode(file_get_contents('php://input'), true);
 
-            if($data["password_change"]){
+            if(isset($data["password_change"])){
                 $user->username = $data['username'];
                 $user->password = $data['password'];
                 $user->update_password($_GET["id_user"]);
