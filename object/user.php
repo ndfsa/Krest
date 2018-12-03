@@ -26,7 +26,7 @@ class User
 
     public function create()
     {
-        $op = ['salt' => $this->username . ':::krestUserUPB', 'cost' => 13];
+        $op = ['salt' => $this->username . ':::krestUserUPBDatabase', 'cost' => 13];
         $hashed_password = password_hash($this->password, PASSWORD_BCRYPT, $op);
         $query = "INSERT INTO " . $this->table_name . " VALUES(null, '"
             . $this->name . "', '"
@@ -51,7 +51,7 @@ class User
 
     public function verify_sign_in(string $username, string $password)
     {
-        $op = ['salt' => $username . ':::krestUserUPB', 'cost' => 13];
+        $op = ['salt' => $username . ':::krestUserUPBDatabase', 'cost' => 13];
         $hashed_password = password_hash($password, PASSWORD_BCRYPT, $op);
         $query = "SELECT * FROM " . $this->table_name . " WHERE username LIKE '" . $username
             . "' AND password LIKE '" . $hashed_password . "'";
@@ -60,7 +60,7 @@ class User
         return $statement;
     }
     public function update_password($id_user){
-        $op = ['salt' => $this->username . ':::krestUserUPB', 'cost' => 13];
+        $op = ['salt' => $this->username . ':::krestUserUPBDatabase', 'cost' => 13];
         $hashed_password = password_hash($this->password, PASSWORD_BCRYPT, $op);
         $query = "UPDATE " . $this->table_name
             . " SET password = '" . $hashed_password

@@ -44,9 +44,9 @@ session_start();
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Add</a>
-                        <a class="dropdown-item" href="#">Modify</a>
-                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" href="../user/add.php">Add</a>
+                        <a class="dropdown-item" href="../user/modify_middle.php">Modify</a>
+                        <a class="dropdown-item" href="../user/delete.php">Delete</a>
                     </div>
 
                 </li>
@@ -89,6 +89,10 @@ session_start();
                 <div class="form-group">
                     <label for="url">URL</label>
                     <input type="text" class="form-control" id="url" placeholder="URL" name="url">
+                </div>
+                <div class="form-group">
+                    <label for="ext">Extensión</label>
+                    <input type="text" class="form-control" id="ext" placeholder="Extensión" name="ext">
                 </div>
                 <div class="form-group">
                     <label for="inputState">Estado</label>

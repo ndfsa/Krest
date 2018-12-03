@@ -28,13 +28,14 @@ session_start();
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="../homepage.php">Krest</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="add.php">Añadir contenido</a>
+                <a class="nav-link" href="../content/add.php">Añadir contenido</a>
             </li>
             <?php if ($_SESSION["type"] == "Administrador") { ?>
                 <li class="nav-item dropdown">
@@ -44,7 +45,7 @@ session_start();
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="modify.php">Modify</a>
+                        <a class="dropdown-item" href="modify_middle.php">Modify</a>
                         <a class="dropdown-item" href="delete.php">Delete</a>
                     </div>
 
@@ -60,13 +61,14 @@ session_start();
 <div class="container-fluid w-100">
     <div class="container">
         <?php
-        if (isset($_POST['title'])) {
+        //var_dump($_POST);
+        if (isset($_POST['name'])) {
             $curl = curl_init();
-            $req_url = 'http://localhost:8080/Krest/services/content_service.php';
+            $req_url = 'http://localhost:8080/Krest/services/user_service.php';
             $headers = ['Accept: application/json',
                 'Content-Type: application/json',
                 'Accept-Encoding: application/json'];
-            $data = array_merge($_POST, array('id_user' => $_SESSION['id_user']));
+            $data = array_merge($_POST, array('new_user' => true));
             curl_setopt_array($curl, array(
                 CURLOPT_HTTPHEADER => $headers,
                 CURLOPT_RETURNTRANSFER => 1,
@@ -83,28 +85,35 @@ session_start();
             ?>
             <form action="add.php" method="post">
                 <div class="form-group">
-                    <label for="name">Título</label>
-                    <input type="text" class="form-control" id="name" placeholder="Nombre" name="name">
+                    <label for="name">Nombre(s)</label>
+                    <input type="text" class="form-control" id="name" placeholder="Nombre(s)" name="name">
                 </div>
                 <div class="form-group">
-                    <label for="surname">URL</label>
-                    <input type="text" class="form-control" id="surname" placeholder="Apellido" name="surname">
+                    <label for="surname">Apellido(s)</label>
+                    <input type="text" class="form-control" id="surname" placeholder="Apellido(s)" name="surname">
                 </div>
                 <div class="form-group">
-                    <label for="inputState">Estado</label>
-                    <select id="inputState" class="form-control" name="state">
+                    <label for="username">Nombre de usuario</label>
+                    <input type="text" class="form-control" id="username" placeholder="Nombre de usuario"
+                           name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña por defecto</label>
+                    <input type="text" class="form-control" id="password" placeholder="Contraseña" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="type">Tipo de usuario</label>
+                    <select id="type" class="form-control" name="type">
                         <option selected>Choose...</option>
-                        <option>Oculto</option>
-                        <option>Normal</option>
-                        <option>Principal</option>
-                        <option>Urgente</option>
+                        <option>Administrador</option>
+                        <option>Moderador</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="description">Descripción</label>
-                    <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                    <label for="date">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" id="date" name="birth">
                 </div>
-                <button type="submit" class="btn btn-primary">Añadir</button>
+                <button type="submit" class="btn btn-primary">Crear</button>
             </form>
             <?php
         }

@@ -63,7 +63,7 @@ switch ($_SERVER['REQUEST_METHOD']){
                 $user->surname = $data['surname'];
                 $user->type = $data['type'];
                 $user->birth = $data['birth'];
-                $user->update($_GET["id_user"]);
+                $user->update($_GET['id_user']);
                 $user->clean_attributes();
                 http_response_code(200);
             }

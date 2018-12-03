@@ -42,9 +42,9 @@
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Add</a>
-                        <a class="dropdown-item" href="#">Modify</a>
-                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" href="../user/add.php">Add</a>
+                        <a class="dropdown-item" href="../user/modify_middle.php">Modify</a>
+                        <a class="dropdown-item" href="../user/delete.php">Delete</a>
                     </div>
 
                 </li>
@@ -82,6 +82,7 @@
                             echo "<li class='list-group-item'>" . $res['title'] . "</li>";
                             echo "<li class='list-group-item'>" . $res['url'] . "</li>";
                             echo "<li class='list-group-item'>" . $res['state'] . "</li>";
+                            echo "<li class='list-group-item'>" . $res['ext'] . "</li>";
                             echo "<li class='list-group-item'>" . $res['description'] . "</li>";
                             ?>
                         </ul>

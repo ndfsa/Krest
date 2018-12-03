@@ -1,14 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Sergio
- * Date: 30-Nov-18
- * Time: 7:52 PM
+ * User: sergi
+ * Date: 02-Dec-18
+ * Time: 10:21 PM
  */
 
-session_start();
 ?>
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -43,7 +41,6 @@ session_start();
                        aria-haspopup="true" aria-expanded="false">
                         Administrar usuarios
                     </a>
-
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="add.php">Add</a>
                         <a class="dropdown-item" href="delete.php">Delete</a>

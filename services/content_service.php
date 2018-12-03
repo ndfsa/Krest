@@ -30,6 +30,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         "title" => $row['title'],
                         "url" => $row['url'],
                         "state" => $row['state'],
+                        "ext" => $row['ext'],
                         "description" => $row['description']
                     );
                     array_push($content_array, $c_item);
@@ -52,6 +53,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         $content->title = $data['title'];
         $content->url = $data['url'];
         $content->state = $data['state'];
+        $content->ext = $data['ext'];
         $content->description = $data['description'];
         $content->create($data['id_user']);
         $content->clean_attributes();
@@ -68,6 +70,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $content->title = $data['title'];
             $content->url = $data['url'];
             $content->state = $data['state'];
+            $content->ext = $data['ext'];
             $content->description = $data['description'];
             $content->modify($_GET['id_content']);
             $content->clean_attributes();

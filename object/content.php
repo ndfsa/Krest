@@ -15,6 +15,7 @@ class Content
     public $title;
     public $url;
     public $state;
+    public $ext;
     public $description;
 
     public function __construct(PDO $db)
@@ -44,6 +45,7 @@ class Content
             . $this->title . "', '"
             . $this->url . "', '"
             . $this->state . "', '"
+            . $this->ext . "', '"
             . $this->description . "', " . $id_user . ")";
         $statement = $this->connection->prepare($query);
         $statement->execute();
@@ -55,6 +57,7 @@ class Content
             . $this->title . "', '"
             . $this->url . "', '"
             . $this->state . "', '"
+            . $this->ext . "', '"
             . $this->description . "', " . $id_content . ")";
         $statement = $this->connection->prepare($query);
         $statement->execute();
@@ -66,6 +69,7 @@ class Content
         $this->title = null;
         $this->url = null;
         $this->state = null;
+        $this->ext = null;
         $this->description = null;
 
     }

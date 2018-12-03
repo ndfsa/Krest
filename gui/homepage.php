@@ -54,7 +54,7 @@ if ($_SESSION["signed_in"]) {
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="#">Add</a>
+                            <a class="dropdown-item" href="./user/add.php">Add</a>
                             <a class="dropdown-item" href="#">Modify</a>
                             <a class="dropdown-item" href="#">Delete</a>
                         </div>
@@ -85,6 +85,7 @@ if ($_SESSION["signed_in"]) {
                     <th>Título</th>
                     <th>URL</th>
                     <th>Estado</th>
+                    <th>Extensión</th>
                     <th>Descripción</th>
                 </tr>
                 <?php
@@ -108,6 +109,7 @@ if ($_SESSION["signed_in"]) {
                         echo '<th>' . $element["title"] . '</th>';
                         echo '<th>' . $element["url"] . '</th>';
                         echo '<th>' . $element["state"] . '</th>';
+                        echo '<th>' . $element["ext"] . '</th>';
                         echo '<th>' . $element["description"] . '</th>';
                         ?>
                         <th class="text-center">

@@ -9,6 +9,7 @@ CREATE TABLE content (
   title       VARCHAR(100),
   url         VARCHAR(100),
   state       VARCHAR(100),
+  ext         VARCHAR(20),
   description TEXT
 );
 
@@ -41,17 +42,19 @@ CREATE TABLE logs (
   title_old       VARCHAR(100),
   url_old         VARCHAR(100),
   state_old       VARCHAR(100),
+  ext_old         VARCHAR(20),
   description_old TEXT,
   title_new       VARCHAR(100),
   url_new         VARCHAR(100),
   state_new       VARCHAR(100),
+  ext_new         VARCHAR(20),
   description_new TEXT
 );
 
 DROP PROCEDURE IF EXISTS ins_content;
 DELIMITER //
 CREATE PROCEDURE ins_content(title VARCHAR(100), url VARCHAR(100),
-                             state VARCHAR(100), description VARCHAR(100), id_user INT)
+                             state VARCHAR(100), ext VARCHAR(20), description VARCHAR(100), id_user INT)
   BEGIN
     DECLARE aux_id INT DEFAULT 0;
     DECLARE exit handler for sqlexception
@@ -60,12 +63,13 @@ CREATE PROCEDURE ins_content(title VARCHAR(100), url VARCHAR(100),
     END;
     START TRANSACTION;
     SET autocommit = 0;
-    INSERT INTO content VALUES (NULL, title, url, state, description);
+    INSERT INTO content VALUES (NULL, title, url, state, ext, description);
     SELECT id_content INTO aux_id
     FROM content c
     WHERE c.title = title
       AND c.url = url
       AND c.state = state
+      AND c.ext = ext
       AND c.description = description
     ORDER BY c.id_content DESC
     LIMIT 1;
@@ -82,7 +86,8 @@ CREATE PROCEDURE get_content(str VARCHAR(200))
     FROM content
     WHERE title LIKE CONCAT('%', str, '%')
        OR description LIKE CONCAT('%', str, '%')
-       OR url LIKE CONCAT('%', str, '%');
+       OR url LIKE CONCAT('%', str, '%')
+       OR ext LIKE CONCAT('%', str, '%');
   END //
 DELIMITER ;
 
@@ -105,7 +110,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS mod_content;
 DELIMITER //
 CREATE PROCEDURE mod_content(title VARCHAR(100), url VARCHAR(100),
-                             state VARCHAR(100), description VARCHAR(100), id_content_input INT)
+                             state VARCHAR(100), ext VARCHAR(20), description VARCHAR(100), id_content_input INT)
   BEGIN
     DECLARE exit handler for sqlexception
     BEGIN
@@ -116,6 +121,7 @@ CREATE PROCEDURE mod_content(title VARCHAR(100), url VARCHAR(100),
     SET c.title       = title,
         c.description = description,
         c.url         = url,
+        c.ext = ext,
         c.state       = state
     WHERE c.id_content = id_content_input;
     COMMIT;
@@ -135,10 +141,12 @@ CREATE TRIGGER log_update
             OLD.title,
             OLD.url,
             OLD.state,
+            OLD.ext,
             OLD.description,
             NEW.title,
             NEW.url,
             NEW.state,
+            NEW.ext,
             NEW.description);
   END//
 DELIMITER ;
