@@ -43,7 +43,7 @@ class User
     public function get_user($id_user)
     {
         $query = "SELECT name, surname, username, type, birth FROM " . $this->table_name
-            . "WHERE id_user = " . $id_user;
+            . " WHERE id_user = " . $id_user;
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;

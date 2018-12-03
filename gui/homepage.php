@@ -55,7 +55,7 @@ if ($_SESSION["signed_in"]) {
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="./user/add.php">Add</a>
-                            <a class="dropdown-item" href="#">Modify</a>
+                            <a class="dropdown-item" href="./user/modify_middle.php">Modify</a>
                             <a class="dropdown-item" href="#">Delete</a>
                         </div>
 

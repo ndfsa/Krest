@@ -6,6 +6,7 @@
  * Time: 10:21 PM
  */
 
+session_start();
 ?>
 <html>
 <head>

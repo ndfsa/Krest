@@ -82,7 +82,7 @@ session_start();
         } else {
             if (isset($_GET['id_user'])) {
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_user=' . $_GET['id_user'];
+                $req_url = 'http://localhost:8080/Krest/services/user_service.php?id_user=' . $_GET['id_user'];
                 $headers = ['Accept: application/json',
                     'Content-Type: application/json',
                     'Accept-Encoding: application/json'];
@@ -93,8 +93,9 @@ session_start();
                     CURLOPT_CUSTOMREQUEST => 'GET'
                 ));
                 $res = json_decode(curl_exec($curl), true);
+                var_dump($res);
                 ?>
-                <form action="modify.php" method="post">
+                <form action="modify.php?id_user=<?php echo $_GET['id_user']; ?>" method="post">
                     <div class="form-group">
                         <label for="name">Nombre(s)</label>
                         <input type="text" class="form-control" id="name" placeholder="Nombre(s)" name="name"

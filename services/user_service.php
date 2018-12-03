@@ -17,10 +17,10 @@ $database = new Database();
 $db_connection = $database->getConnection();
 $user = new User($db_connection);
 
-switch ($_SERVER['REQUEST_METHOD']){
+switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
-        if(isset($data["new_user"])){
+        if (isset($data["new_user"])) {
             $data = json_decode(file_get_contents('php://input'), true);
             $user->name = $data['name'];
             $user->surname = $data['surname'];
@@ -31,10 +31,10 @@ switch ($_SERVER['REQUEST_METHOD']){
             $user->create();
             $user->clean_attributes();
             http_response_code(200);
-        }else{
+        } else {
             $statement = $user->verify_sign_in($data['username'], $data['password']);
             $num = $statement->rowCount();
-            if($num > 0){
+            if ($num > 0) {
                 $row = $statement->fetch(PDO::FETCH_ASSOC);
                 $response = array(
                     'id_user' => $row['id_user'],
@@ -50,15 +50,15 @@ switch ($_SERVER['REQUEST_METHOD']){
         }
         break;
     case 'PUT':
-        if(isset($_GET["id_user"])){
+        if (isset($_GET["id_user"])) {
             $data = json_decode(file_get_contents('php://input'), true);
 
-            if(isset($data["password_change"])){
+            if (isset($data["password_change"])) {
                 $user->username = $data['username'];
                 $user->password = $data['password'];
                 $user->update_password($_GET["id_user"]);
                 $user->clean_attributes();
-            }else{
+            } else {
                 $user->name = $data['name'];
                 $user->surname = $data['surname'];
                 $user->type = $data['type'];
@@ -67,12 +67,12 @@ switch ($_SERVER['REQUEST_METHOD']){
                 $user->clean_attributes();
                 http_response_code(200);
             }
-        }else{
+        } else {
             http_response_code(500);
         }
         break;
     case 'DELETE':
-        if(isset($_GET['id_user'])){
+        if (isset($_GET['id_user'])) {
             $user->remove($data['id_user']);
             http_response_code(200);
         }
@@ -80,18 +80,16 @@ switch ($_SERVER['REQUEST_METHOD']){
     case 'GET':
         $statement = $user->get_user($_GET['id_user']);
         $num = $statement->rowCount();
-        if($num > 0) {
-            $row = $statement->fetch(PDO::FETCH_ASSOC);
-            $response = array(
-                'name' => $row['name'],
-                'surname' => $row['surname'],
-                'username' => $row['username'],
-                'type' => $row['type'],
-                'birth' => $row['birth']
-            );
-            http_response_code(200);
-            echo json_encode($response);
-        }
+        $row = $statement->fetch(PDO::FETCH_ASSOC);
+        $response = array(
+            'name' => $row['name'],
+            'surname' => $row['surname'],
+            'username' => $row['username'],
+            'type' => $row['type'],
+            'birth' => $row['birth']
+        );
+        http_response_code(200);
+        echo json_encode($response);
         break;
     default:
         http_response_code(500);
