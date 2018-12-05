@@ -93,7 +93,7 @@ session_start();
                     CURLOPT_CUSTOMREQUEST => 'GET'
                 ));
                 $res = json_decode(curl_exec($curl), true);
-                var_dump($res);
+                //var_dump($res);
                 ?>
                 <form action="modify.php?id_user=<?php echo $_GET['id_user']; ?>" method="post">
                     <div class="form-group">

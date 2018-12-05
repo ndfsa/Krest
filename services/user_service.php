@@ -73,7 +73,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         break;
     case 'DELETE':
         if (isset($_GET['id_user'])) {
-            $user->remove($data['id_user']);
+            $user->remove($_GET['id_user']);
             http_response_code(200);
         }
         break;
