@@ -60,8 +60,8 @@ session_start();
     <div class="container">
         <form action="modify.php" method="get">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="ID Usuario" aria-label="id_user"
-                       aria-describedby="basic-addon2" name="id_user">
+                <input type="text" class="form-control" placeholder="Username" aria-label="username"
+                       aria-describedby="basic-addon2" name="username">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" type="submit">Modificar</button>
                 </div>

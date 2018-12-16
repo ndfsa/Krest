@@ -17,6 +17,10 @@ $database = new Database();
 $db_connection = $database->getConnection();
 $user = new User($db_connection);
 
+if($_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']){
+    die("unauthorized: " . $_SERVER['REMOTE_ADDR'] . " != " . $_SERVER['SERVER_ADDR']);
+}
+
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'POST':
         $data = json_decode(file_get_contents('php://input'), true);
@@ -78,7 +82,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     case 'GET':
-        $statement = $user->get_user($_GET['id_user']);
+        $statement = $user->get_user($_GET['username']);
         $num = $statement->rowCount();
         $row = $statement->fetch(PDO::FETCH_ASSOC);
         $response = array(

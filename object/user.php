@@ -40,10 +40,10 @@ class User
 
     }
 
-    public function get_user($id_user)
+    public function get_user($username)
     {
         $query = "SELECT name, surname, username, type, birth FROM " . $this->table_name
-            . " WHERE id_user = " . $id_user;
+            . " WHERE username = '" . $username . "'";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         return $statement;
@@ -59,7 +59,9 @@ class User
         $statement->execute();
         return $statement;
     }
-    public function update_password($id_user){
+
+    public function update_password($id_user)
+    {
         $op = ['salt' => $this->username . ':::krestUserUPBDatabase', 'cost' => 13];
         $hashed_password = password_hash($this->password, PASSWORD_BCRYPT, $op);
         $query = "UPDATE " . $this->table_name
@@ -69,6 +71,7 @@ class User
         $statement = $this->connection->prepare($query);
         $statement->execute();
     }
+
     public function remove($id_user)
     {
         $query = "DELETE FROM " . $this->table_name . " WHERE id_user = " . $id_user;

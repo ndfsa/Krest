@@ -80,9 +80,9 @@ session_start();
                class="btn btn-primary btn-lg">Volver a inicio</a>
             <?php
         } else {
-            if (isset($_GET['id_user'])) {
+            if (isset($_GET['username'])) {
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/user_service.php?id_user=' . $_GET['id_user'];
+                $req_url = 'http://localhost:8080/Krest/services/user_service.php?username=' . $_GET['username'];
                 $headers = ['Accept: application/json',
                     'Content-Type: application/json',
                     'Accept-Encoding: application/json'];
@@ -93,7 +93,7 @@ session_start();
                     CURLOPT_CUSTOMREQUEST => 'GET'
                 ));
                 $res = json_decode(curl_exec($curl), true);
-                //var_dump($res);
+                var_dump($res);
                 ?>
                 <form action="modify.php?id_user=<?php echo $_GET['id_user']; ?>" method="post">
                     <div class="form-group">

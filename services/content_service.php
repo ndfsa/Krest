@@ -17,6 +17,10 @@ $database = new Database();
 $db_connection = $database->getConnection();
 $content = new Content($db_connection);
 
+if($_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']){
+    die("unauthorized: " . $_SERVER['REMOTE_ADDR'] . " != " . $_SERVER['SERVER_ADDR']);
+}
+
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         if(isset($_GET['search'])){
@@ -31,6 +35,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                         "url" => $row['url'],
                         "state" => $row['state'],
                         "ext" => $row['ext'],
+                        "dateOf" => $row['dateOf'],
                         "description" => $row['description']
                     );
                     array_push($content_array, $c_item);

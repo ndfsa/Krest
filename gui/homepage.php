@@ -34,6 +34,7 @@ if ($_SESSION["signed_in"]) {
         $search = "";
     }
     //var_dump($search);
+    //var_dump($_SERVER['SERVER_ADDR']);
     ?>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="homepage.php">Krest</a>
@@ -86,6 +87,7 @@ if ($_SESSION["signed_in"]) {
                     <th>URL</th>
                     <th>Estado</th>
                     <th>Extensión</th>
+                    <th>Fecha de adición</th>
                     <th>Descripción</th>
                 </tr>
                 <?php
@@ -110,6 +112,7 @@ if ($_SESSION["signed_in"]) {
                         echo '<th>' . $element["url"] . '</th>';
                         echo '<th>' . $element["state"] . '</th>';
                         echo '<th>' . $element["ext"] . '</th>';
+                        echo '<th>' . $element["dateOf"] . '</th>';
                         echo '<th>' . $element["description"] . '</th>';
                         ?>
                         <th class="text-center">

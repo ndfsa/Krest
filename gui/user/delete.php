@@ -5,6 +5,8 @@
  * Date: 30-Nov-18
  * Time: 7:52 PM
  */
+
+session_start();
 ?>
 
 <html>
@@ -26,7 +28,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="../homepage.php">Krest</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -53,13 +56,14 @@
             </li>
         </ul>
     </div>
-</nav><br>
+</nav>
+<br>
 <div class="container-fluid w-100">
     <div class="container">
         <?php
-        if (isset($_GET['id_content'])) {
+        if (isset($_GET['username'])) {
             $curl = curl_init();
-            $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
+            $req_url = 'http://localhost:8080/Krest/services/user_service.php?username=' . $_GET['username'];
             $headers = ['Accept: application/json',
                 'Content-Type: application/json',
                 'Accept-Encoding: application/json'];
@@ -70,24 +74,24 @@
                 CURLOPT_CUSTOMREQUEST => 'GET'
             ));
             $res = json_decode(curl_exec($curl), true);
-            if (isset($res['id_content'])) {
+            if (isset($res['id_user'])) {
                 ?>
                 <div class="d-flex justify-content-between">
                     <div class="p-2">
                         <h3>Usted está por eliminar:</h3><br>
                         <ul class="list-group">
                             <?php
-                            echo "<li class='list-group-item'>" . $res['id_content'] . "</li>";
-                            echo "<li class='list-group-item'>" . $res['title'] . "</li>";
-                            echo "<li class='list-group-item'>" . $res['url'] . "</li>";
-                            echo "<li class='list-group-item'>" . $res['state'] . "</li>";
-                            echo "<li class='list-group-item'>" . $res['ext'] . "</li>";
-                            echo "<li class='list-group-item'>" . $res['description'] . "</li>";
+                            echo "<li class='list-group-item'>" . $res['id_user'] . "</li>";
+                            echo "<li class='list-group-item'>" . $res['name'] . "</li>";
+                            echo "<li class='list-group-item'>" . $res['surname'] . "</li>";
+                            echo "<li class='list-group-item'>" . $res['username'] . "</li>";
+                            echo "<li class='list-group-item'>" . $res['birth'] . "</li>";
+                            echo "<li class='list-group-item'>" . $res['type'] . "</li>";
                             ?>
                         </ul>
                     </div>
                     <div class="p-2">
-                        <a href="delete.php?delete=<?php echo $res['id_content']; ?>"
+                        <a href="delete.php?delete=<?php echo $res['id_user']; ?>"
                            class="btn btn-danger btn-lg">Eliminar</a>
                     </div>
                 </div>
@@ -100,7 +104,7 @@
         } else {
             if (isset($_GET['delete'])) {
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_content=' . $_GET['delete'];
+                $req_url = 'http://localhost:8080/Krest/services/user_service.php?id_user=' . $_GET['delete'];
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $req_url,
                     CURLOPT_CUSTOMREQUEST => 'DELETE'
