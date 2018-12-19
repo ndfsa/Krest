@@ -47,7 +47,7 @@ $host = $_SERVER['HTTP_HOST'];
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="add.php">Add</a>
-                        <a class="dropdown-item" href="delete.php">Delete</a>
+                        <a class="dropdown-item" href="delete_middle.php">Delete</a>
                     </div>
 
                 </li>
@@ -73,7 +73,7 @@ $host = $_SERVER['HTTP_HOST'];
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => $req_url,
                 CURLOPT_POSTFIELDS => json_encode($_POST),
-                CURLOPT_CUSTOMREQUEST => 'PUT'
+                CURLOPT_CUSTOMREQUEST => 'POST'
             ));
             curl_exec($curl);
             ?>
@@ -94,9 +94,9 @@ $host = $_SERVER['HTTP_HOST'];
                     CURLOPT_CUSTOMREQUEST => 'GET'
                 ));
                 $res = json_decode(curl_exec($curl), true);
-                var_dump($res);
+                //var_dump($res);
                 ?>
-                <form action="modify.php?id_user=<?php echo $_GET['id_user']; ?>" method="post">
+                <form action="modify.php?id_user=<?php echo $res['id_user']; ?>" method="post">
                     <div class="form-group">
                         <label for="name">Nombre(s)</label>
                         <input type="text" class="form-control" id="name" placeholder="Nombre(s)" name="name"
@@ -127,6 +127,7 @@ $host = $_SERVER['HTTP_HOST'];
                     </div>
                     <button type="submit" class="btn btn-primary">Modificar</button>
                 </form>
+
                 <?php
             } else {
                 echo "<p1>No se encontró el usuario</p1>";

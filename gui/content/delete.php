@@ -47,7 +47,7 @@ $host = $_SERVER['HTTP_HOST'];
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="../user/add.php">Add</a>
                         <a class="dropdown-item" href="../user/modify_middle.php">Modify</a>
-                        <a class="dropdown-item" href="../user/delete.php">Delete</a>
+                        <a class="dropdown-item" href="../user/delete_middle.php">Delete</a>
                     </div>
 
                 </li>
@@ -105,10 +105,10 @@ $host = $_SERVER['HTTP_HOST'];
         } else {
             if (isset($_GET['delete'])) {
                 $curl = curl_init();
-                $req_url = 'http://' . $host . '/Krest/services/content_service.php?id_content=' . $_GET['delete'];
+                $req_url = 'http://' . $host . '/Krest/services/content_service.php?d=1&id_content=' . $_GET['delete'];
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $req_url,
-                    CURLOPT_CUSTOMREQUEST => 'DELETE'
+                    CURLOPT_CUSTOMREQUEST => 'GET'
                 ));
                 curl_exec($curl);
                 ?>

@@ -7,6 +7,7 @@
  */
 
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, DELETE, PUT");
 header("Content-Type: application/json");
 header("Accept: application/json");
 
@@ -17,13 +18,13 @@ $database = new Database();
 $db_connection = $database->getConnection();
 $content = new Content($db_connection);
 
-if($_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']){
-    die("unauthorized: " . $_SERVER['REMOTE_ADDR'] . " != " . $_SERVER['SERVER_ADDR']);
+if ($_SERVER['REMOTE_ADDR'] !== $_SERVER['SERVER_ADDR']) {
+    //die("unauthorized: " . $_SERVER['REMOTE_ADDR'] . " != " . $_SERVER['SERVER_ADDR']);
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
-        if(isset($_GET['search'])){
+        if (isset($_GET['search'])) {
             $statement = $content->read(urldecode($_GET["search"]));
             $num = $statement->rowCount();
             if ($num > 0) {
@@ -43,7 +44,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 http_response_code(200);
                 echo json_encode($content_array);
             }
-        }else if (isset($_GET['id_content'])){
+        } else if (isset($_GET['id_content']) && !isset($_GET['d'])) {
             $statement = $content->readOne($_GET["id_content"]);
             $num = $statement->rowCount();
             if ($num === 1) {
@@ -51,26 +52,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 http_response_code(200);
                 echo json_encode($elem);
             }
-        }
-        break;
-    case 'POST':
-        $data = json_decode(file_get_contents('php://input'), true);
-        $content->title = $data['title'];
-        $content->url = $data['url'];
-        $content->state = $data['state'];
-        $content->ext = $data['ext'];
-        $content->description = $data['description'];
-        $content->create($data['id_user']);
-        $content->clean_attributes();
-        break;
-    case 'DELETE':
-        if(isset($_GET['id_content'])){
+        } else if (isset($_GET['d']) && isset($_GET['id_content'])) {
             $content->remove($_GET["id_content"]);
             http_response_code(200);
         }
         break;
-    case 'PUT':
-        if(isset($_GET['id_content'])){
+    case 'POST':
+        if (isset($_GET['id_content'])) {
             $data = json_decode(file_get_contents('php://input'), true);
             $content->title = $data['title'];
             $content->url = $data['url'];
@@ -78,6 +66,15 @@ switch ($_SERVER['REQUEST_METHOD']) {
             $content->ext = $data['ext'];
             $content->description = $data['description'];
             $content->modify($_GET['id_content']);
+            $content->clean_attributes();
+        } else {
+            $data = json_decode(file_get_contents('php://input'), true);
+            $content->title = $data['title'];
+            $content->url = $data['url'];
+            $content->state = $data['state'];
+            $content->ext = $data['ext'];
+            $content->description = $data['description'];
+            $content->create($data['id_user']);
             $content->clean_attributes();
         }
         break;

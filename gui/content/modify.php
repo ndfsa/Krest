@@ -48,7 +48,7 @@ $host = $_SERVER['HTTP_HOST'];
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="../user/add.php">Add</a>
                         <a class="dropdown-item" href="../user/modify_middle.php">Modify</a>
-                        <a class="dropdown-item" href="../user/delete.php">Delete</a>
+                        <a class="dropdown-item" href="../user/delete_middle.php">Delete</a>
                     </div>
 
                 </li>
@@ -75,7 +75,7 @@ $host = $_SERVER['HTTP_HOST'];
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_URL => $req_url,
                 CURLOPT_POSTFIELDS => json_encode($data),
-                CURLOPT_CUSTOMREQUEST => 'PUT'
+                CURLOPT_CUSTOMREQUEST => 'POST'
             ));
             curl_exec($curl);
             ?>

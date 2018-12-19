@@ -34,7 +34,7 @@ session_start();
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="add.php">Añadir contenido</a>
+                <a class="nav-link" href="../content/add.php">Añadir contenido</a>
             </li>
             <?php if ($_SESSION["type"] == "Administrador") { ?>
                 <li class="nav-item dropdown">

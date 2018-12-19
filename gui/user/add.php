@@ -47,7 +47,7 @@ $host = $_SERVER['HTTP_HOST'];
 
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="modify_middle.php">Modify</a>
-                        <a class="dropdown-item" href="delete.php">Delete</a>
+                        <a class="dropdown-item" href="delete_middle.php">Delete</a>
                     </div>
 
                 </li>

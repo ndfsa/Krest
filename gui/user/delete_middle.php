@@ -2,14 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: Sergio
- * Date: 30-Nov-18
- * Time: 7:52 PM
+ * Date: 19-Dec-18
+ * Time: 9:50 AM
  */
 
-$host = $_SERVER['HTTP_HOST'];
 session_start();
 ?>
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -44,10 +42,9 @@ session_start();
                        aria-haspopup="true" aria-expanded="false">
                         Administrar usuarios
                     </a>
-
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="add.php">Añadir</a>
-                        <a class="dropdown-item" href="delete.php">Modificar</a>
+                        <a class="dropdown-item" href="modify_middle.php">Modificar</a>
                     </div>
 
                 </li>
@@ -59,43 +56,18 @@ session_start();
     </div>
 </nav>
 <br>
-<?php
-if (isset($_POST['password'])) {
-    $curl = curl_init();
-    $req_url = 'http://' . $host . '/Krest/services/user_service.php?id_user=' . $_SESSION['id_user'];
-    $headers = ['Accept: application/json',
-        'Content-Type: application/json',
-        'Accept-Encoding: application/json'];
-    $data = array_merge($_POST, array('username' => $_SESSION['username'], 'password_change' => true));
-    curl_setopt_array($curl, array(
-        CURLOPT_HTTPHEADER => $headers,
-        CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_URL => $req_url,
-        CURLOPT_POSTFIELDS => json_encode($data),
-        CURLOPT_CUSTOMREQUEST => 'POST'
-    ));
-    curl_exec($curl);
-    ?>
-    <a href="../homepage.php"
-       class="btn btn-primary btn-lg">Volver a inicio</a>
-    <?php
-} else {
-    ?>
-    <div class="container-fluid w-100">
-        <div class="container">
-            <form action="modify_password.php" method="post">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Nueva contraseña" aria-label="Contraseña"
-                           aria-describedby="basic-addon2" name="password">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit">Modificar contraseña</button>
-                    </div>
+<div class="container-fluid w-100">
+    <div class="container">
+        <form action="delete.php" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Username" aria-label="username"
+                       aria-describedby="basic-addon2" name="username">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-danger" type="submit">Eliminar</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
-    <?php
-}
-?>
+</div>
 </body>
 </html>

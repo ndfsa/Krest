@@ -164,7 +164,10 @@ DROP PROCEDURE IF EXISTS get_content_filtered;
 DELIMITER //
 CREATE PROCEDURE get_content_filtered()
 BEGIN
-  (SELECT * FROM content c WHERE c.state = 'Urgente') UNION (SELECT * FROM content c WHERE c.state = 'Principal')
-  UNION (SELECT * FROM content c WHERE c.state = 'Normal');
+    (SELECT * FROM content c WHERE c.state = 'Urgente' ORDER BY dateOf)
+    UNION
+    (SELECT * FROM content c WHERE c.state = 'Principal' ORDER BY dateOf)
+    UNION
+    (SELECT * FROM content c WHERE c.state = 'Normal' ORDER BY dateOf);
 END //
 DELIMITER ;

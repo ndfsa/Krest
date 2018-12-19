@@ -75,7 +75,7 @@ session_start();
                 CURLOPT_CUSTOMREQUEST => 'GET'
             ));
             $res = json_decode(curl_exec($curl), true);
-            if (isset($res['id_user'])) {
+            if (isset($res['username'])) {
                 ?>
                 <div class="d-flex justify-content-between">
                     <div class="p-2">
@@ -105,10 +105,10 @@ session_start();
         } else {
             if (isset($_GET['delete'])) {
                 $curl = curl_init();
-                $req_url = 'http://' . $host . '/Krest/services/user_service.php?id_user=' . $_GET['delete'];
+                $req_url = 'http://' . $host . '/Krest/services/user_service.php?d=1&id_user=' . $_GET['delete'];
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $req_url,
-                    CURLOPT_CUSTOMREQUEST => 'DELETE'
+                    CURLOPT_CUSTOMREQUEST => 'GET'
                 ));
                 curl_exec($curl);
                 ?>
