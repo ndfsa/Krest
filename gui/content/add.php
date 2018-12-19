@@ -7,6 +7,8 @@
  */
 
 session_start();
+$host = $_SERVER['HTTP_HOST'];
+
 ?>
 
 <html>
@@ -62,7 +64,7 @@ session_start();
         <?php
         if (isset($_POST['title'])) {
             $curl = curl_init();
-            $req_url = 'http://localhost:8080/Krest/services/content_service.php';
+            $req_url = 'http://' . $host . '/Krest/services/content_service.php';
             $headers = ['Accept: application/json',
                 'Content-Type: application/json',
                 'Accept-Encoding: application/json'];

@@ -6,6 +6,7 @@
  * Time: 7:52 PM
  */
 
+$host = $_SERVER['HTTP_HOST'];
 session_start();
 ?>
 
@@ -63,7 +64,7 @@ session_start();
         <?php
         if (isset($_GET['username'])) {
             $curl = curl_init();
-            $req_url = 'http://localhost:8080/Krest/services/user_service.php?username=' . $_GET['username'];
+            $req_url = 'http://' . $host . '/Krest/services/user_service.php?username=' . $_GET['username'];
             $headers = ['Accept: application/json',
                 'Content-Type: application/json',
                 'Accept-Encoding: application/json'];
@@ -104,7 +105,7 @@ session_start();
         } else {
             if (isset($_GET['delete'])) {
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/user_service.php?id_user=' . $_GET['delete'];
+                $req_url = 'http://' . $host . '/Krest/services/user_service.php?id_user=' . $_GET['delete'];
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $req_url,
                     CURLOPT_CUSTOMREQUEST => 'DELETE'

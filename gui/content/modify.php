@@ -7,6 +7,7 @@
  */
 
 session_start();
+$host = $_SERVER['HTTP_HOST'];
 ?>
 
 <html>
@@ -64,7 +65,7 @@ session_start();
         <?php
         if (isset($_POST['title'])) {
             $curl = curl_init();
-            $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
+            $req_url = 'http://' . $host . '/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
             $headers = ['Accept: application/json',
                 'Content-Type: application/json',
                 'Accept-Encoding: application/json'];
@@ -84,7 +85,7 @@ session_start();
         } else {
             if (isset($_GET['id_content'])) {
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
+                $req_url = 'http://' . $host . '/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
                 $headers = ['Accept: application/json',
                     'Content-Type: application/json',
                     'Accept-Encoding: application/json'];

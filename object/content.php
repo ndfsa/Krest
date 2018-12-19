@@ -31,6 +31,14 @@ class Content
         return $statement;
     }
 
+    public function getAll()
+    {
+        $query = "CALL get_content_filtered()";
+        $statement = $this->connection->prepare($query);
+        $statement->execute();
+        return $statement;
+    }
+
     public function readOne(int $id_content)
     {
         $query = "CALL get_one('" . $id_content . "')";

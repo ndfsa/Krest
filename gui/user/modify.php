@@ -7,6 +7,7 @@
  */
 
 session_start();
+$host = $_SERVER['HTTP_HOST'];
 ?>
 
 <html>
@@ -63,7 +64,7 @@ session_start();
         <?php
         if (isset($_POST['name'])) {
             $curl = curl_init();
-            $req_url = 'http://localhost:8080/Krest/services/user_service.php?id_user=' . $_GET['id_user'];
+            $req_url = 'http://' . $host . '/Krest/services/user_service.php?id_user=' . $_GET['id_user'];
             $headers = ['Accept: application/json',
                 'Content-Type: application/json',
                 'Accept-Encoding: application/json'];
@@ -82,7 +83,7 @@ session_start();
         } else {
             if (isset($_GET['username'])) {
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/user_service.php?username=' . $_GET['username'];
+                $req_url = 'http://' . $host . '/Krest/services/user_service.php?username=' . $_GET['username'];
                 $headers = ['Accept: application/json',
                     'Content-Type: application/json',
                     'Accept-Encoding: application/json'];
@@ -99,12 +100,12 @@ session_start();
                     <div class="form-group">
                         <label for="name">Nombre(s)</label>
                         <input type="text" class="form-control" id="name" placeholder="Nombre(s)" name="name"
-                        value="<?php echo $res['name']; ?>">
+                               value="<?php echo $res['name']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="surname">Apellido(s)</label>
                         <input type="text" class="form-control" id="surname" placeholder="Apellido(s)" name="surname"
-                        value="<?php echo $res['surname']; ?>">
+                               value="<?php echo $res['surname']; ?>">
                     </div>
                     <div class="form-group">
                         <label for="username">Nombre de usuario</label>
@@ -121,12 +122,13 @@ session_start();
                     </div>
                     <div class="form-group">
                         <label for="date">Fecha de nacimiento</label>
-                        <input type="date" class="form-control" id="date" name="birth" value="<?php echo $res['birth']; ?>">
+                        <input type="date" class="form-control" id="date" name="birth"
+                               value="<?php echo $res['birth']; ?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Modificar</button>
                 </form>
                 <?php
-            }else{
+            } else {
                 echo "<p1>No se encontró el usuario</p1>";
             }
         }

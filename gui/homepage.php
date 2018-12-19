@@ -6,6 +6,7 @@
  * Time: 1:11 PM
  */
 
+$host = $_SERVER['HTTP_HOST'];
 session_start();
 ?>
 <html>
@@ -63,6 +64,9 @@ if ($_SESSION["signed_in"]) {
                     </li>
                 <?php } ?>
                 <li class="nav-item">
+                    <a class="nav-link" href="user/modify_password.php">Modificar contraseña</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="login.php?sign_out=true">Cerrar sesión</a>
                 </li>
             </ul>
@@ -92,7 +96,7 @@ if ($_SESSION["signed_in"]) {
                 </tr>
                 <?php
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/content_service.php?search=' . urlencode($search);
+                $req_url = 'http://' . $host . '/Krest/services/content_service.php?search=' . urlencode($search);
                 $headers = ['Accept: application/json',
                     'Content-Type: application/json',
                     'Accept-Encoding: application/json'];

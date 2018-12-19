@@ -6,6 +6,7 @@
  * Time: 7:52 PM
  */
 
+$host = $_SERVER['HTTP_HOST'];
 session_start();
 ?>
 
@@ -58,18 +59,43 @@ session_start();
     </div>
 </nav>
 <br>
-<div class="container-fluid w-100">
-    <div class="container">
-        <form action="modify.php" method="get">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="ID Usuario" aria-label="id_user"
-                       aria-describedby="basic-addon2" name="id_user">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Modificar</button>
+<?php
+if (isset($_POST['password'])) {
+    $curl = curl_init();
+    $req_url = 'http://' . $host . '/Krest/services/user_service.php?id_user=' . $_SESSION['id_user'];
+    $headers = ['Accept: application/json',
+        'Content-Type: application/json',
+        'Accept-Encoding: application/json'];
+    $data = array_merge($_POST, array('username' => $_SESSION['username'], 'password_change' => true));
+    curl_setopt_array($curl, array(
+        CURLOPT_HTTPHEADER => $headers,
+        CURLOPT_RETURNTRANSFER => 1,
+        CURLOPT_URL => $req_url,
+        CURLOPT_POSTFIELDS => json_encode($data),
+        CURLOPT_CUSTOMREQUEST => 'PUT'
+    ));
+    curl_exec($curl);
+    ?>
+    <a href="../homepage.php"
+       class="btn btn-primary btn-lg">Volver a inicio</a>
+    <?php
+} else {
+    ?>
+    <div class="container-fluid w-100">
+        <div class="container">
+            <form action="modify_password.php" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nueva contraseña" aria-label="Contraseña"
+                           aria-describedby="basic-addon2" name="password">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Modificar contraseña</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+    <?php
+}
+?>
 </body>
 </html>

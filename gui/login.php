@@ -5,6 +5,9 @@
  * Date: 09-Nov-18
  * Time: 2:31 PM
  */
+
+$host = $_SERVER['HTTP_HOST'];
+
 ?>
 
 <html>
@@ -49,7 +52,7 @@
                 } else {
                     if (isset($_POST['username'])) {
                         $curl = curl_init();
-                        $req_url = 'http://localhost:8080/Krest/services/user_service.php';
+                        $req_url = 'http://' . $host . '/Krest/services/user_service.php';
                         $headers = ['Accept: application/json',
                             'Content-Type: application/json',
                             'Accept-Encoding: application/json'];
@@ -74,7 +77,8 @@
                             <form action="login.php" method="post">
                                 <div class="form-group">
                                     <label for="userInput">Nombre de usuario</label>
-                                    <input type="text" class="form-control" id="userInput" aria-describedby="usernameHelp"
+                                    <input type="text" class="form-control" id="userInput"
+                                           aria-describedby="usernameHelp"
                                            placeholder="Ingrese nombre de Usuario" name="username">
                                 </div>
                                 <div class="form-group">

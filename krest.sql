@@ -159,3 +159,12 @@ BEGIN
           NEW.description);
 END//
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS get_content_filtered;
+DELIMITER //
+CREATE PROCEDURE get_content_filtered()
+BEGIN
+  (SELECT * FROM content c WHERE c.state = 'Urgente') UNION (SELECT * FROM content c WHERE c.state = 'Principal')
+  UNION (SELECT * FROM content c WHERE c.state = 'Normal');
+END //
+DELIMITER ;

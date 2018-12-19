@@ -5,6 +5,8 @@
  * Date: 14-Nov-18
  * Time: 8:59 PM
  */
+
+$host = $_SERVER['HTTP_HOST'];
 ?>
 
 <html>
@@ -26,7 +28,8 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="../homepage.php">Krest</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -54,13 +57,14 @@
             </li>
         </ul>
     </div>
-</nav><br>
+</nav>
+<br>
 <div class="container-fluid w-100">
     <div class="container">
         <?php
         if (isset($_GET['id_content'])) {
             $curl = curl_init();
-            $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
+            $req_url = 'http://' . $host . '/Krest/services/content_service.php?id_content=' . $_GET['id_content'];
             $headers = ['Accept: application/json',
                 'Content-Type: application/json',
                 'Accept-Encoding: application/json'];
@@ -101,7 +105,7 @@
         } else {
             if (isset($_GET['delete'])) {
                 $curl = curl_init();
-                $req_url = 'http://localhost:8080/Krest/services/content_service.php?id_content=' . $_GET['delete'];
+                $req_url = 'http://' . $host . '/Krest/services/content_service.php?id_content=' . $_GET['delete'];
                 curl_setopt_array($curl, array(
                     CURLOPT_URL => $req_url,
                     CURLOPT_CUSTOMREQUEST => 'DELETE'
